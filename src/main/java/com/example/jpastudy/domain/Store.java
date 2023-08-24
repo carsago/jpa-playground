@@ -23,10 +23,10 @@ public class Store {
     private Long id;
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Product> products = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Employee> employees = new ArrayList<>();
 
     public Store(String name) {
@@ -40,9 +40,11 @@ public class Store {
 
     public void addProducts(Product product) {
         products.add(product);
+        product.addStore(this);
     }
 
     public void hireEmployee(Employee employee) {
         employees.add(employee);
+        employee.addStore(this);
     }
 }
