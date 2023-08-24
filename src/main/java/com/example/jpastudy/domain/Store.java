@@ -1,8 +1,10 @@
 package com.example.jpastudy.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
@@ -17,14 +19,14 @@ import lombok.NoArgsConstructor;
 public class Store {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Product> products = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Employee> employees = new ArrayList<>();
 
     public Store(String name) {
@@ -34,5 +36,13 @@ public class Store {
     public Store(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public void addProducts(Product product) {
+        products.add(product);
+    }
+
+    public void hireEmployee(Employee employee) {
+        employees.add(employee);
     }
 }
