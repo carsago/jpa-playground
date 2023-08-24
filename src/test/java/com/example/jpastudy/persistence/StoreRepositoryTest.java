@@ -3,7 +3,6 @@ package com.example.jpastudy.persistence;
 import com.example.jpastudy.domain.Employee;
 import com.example.jpastudy.domain.Product;
 import com.example.jpastudy.domain.Store;
-import jakarta.persistence.EntityManager;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -21,9 +20,6 @@ class StoreRepositoryTest {
 
     @Autowired
     private StoreRepository storeRepository;
-
-    @Autowired
-    private EntityManager em;
 
     private AtomicInteger atomicInteger = new AtomicInteger(1);
 
@@ -88,27 +84,6 @@ class StoreRepositoryTest {
         }
     }
 
-    @Test
-    void 상품만_페치_조인() {
-        // given
-        setUp("현서 가게");
-        setUp("얀디 가게");
-
-        // when
-        List<Store> stores = storeRepository.findAllWithFetchJoinProduct();
-        for (Store store : stores) {
-            System.out.println("store.getId() = " + store.getId());
-            System.out.println("----------------------");
-
-            for (Product product : store.getProducts()) {
-                System.out.println("product.getId() = " + product.getId());
-                System.out.println("product.getName() = " + product.getName());
-            }
-
-            System.out.println("----------------------");
-        }
-    }
-
     private Long setUp(String storeName) {
         Store store = new Store(storeName);
         store.addProducts(new Product("양념통닭" + atomicInteger.getAndIncrement(), 100));
@@ -116,7 +91,6 @@ class StoreRepositoryTest {
         store.hireEmployee(new Employee("장병규" + atomicInteger.getAndIncrement()));
         store.hireEmployee(new Employee("오타니" + atomicInteger.getAndIncrement()));
         storeRepository.save(store);
-        em.clear();
         return store.getId();
     }
 }
