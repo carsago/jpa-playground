@@ -11,10 +11,4 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
         + "FROM Store s "
         + "JOIN FETCH s.products ")
     List<Store> findAllWithFetchJoinProduct();
-
-    @Query("SELECT distinct s   "
-        + "FROM Store s "
-        + "JOIN FETCH s.products "
-        + "JOIN FETCH s.employees")
-    List<Store> findAllWithFetchJoin();
 }
