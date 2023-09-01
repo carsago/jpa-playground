@@ -1,6 +1,7 @@
 package com.example.jpastudy.support;
 
 import com.example.jpastudy.domain.Employee;
+import com.example.jpastudy.domain.Fan;
 import com.example.jpastudy.domain.Product;
 import com.example.jpastudy.domain.Store;
 import com.example.jpastudy.persistence.StoreRepository;
@@ -23,8 +24,28 @@ public class StoreService {
             Store store = new Store("a" + i);
             store.addProducts(new Product("양념통닭" + i, 100));
             store.addProducts(new Product("고추바사삭" + i, 100));
+            store.addProducts(new Product("아구찜" + i, 100));
+            store.addProducts(new Product("아구찜" + i, 100));
+            store.addProducts(new Product("아구찜" + i, 100));
+            store.addProducts(new Product("아구찜" + i, 100));
+            store.addProducts(new Product("아구찜" + i, 100));
+            store.addProducts(new Product("아구찜" + i, 100));
             store.hireEmployee(new Employee("장병규" + i));
             store.hireEmployee(new Employee("오타니" + i));
+            store.hireEmployee(new Employee("김하성" + i));
+            store.hireEmployee(new Employee("김하성" + i));
+            store.hireEmployee(new Employee("김하성" + i));
+            store.hireEmployee(new Employee("김하성" + i));
+            store.hireEmployee(new Employee("김하성" + i));
+            store.hireEmployee(new Employee("김하성" + i));
+            store.addFan(new Fan());
+            store.addFan(new Fan());
+            store.addFan(new Fan());
+            store.addFan(new Fan());
+            store.addFan(new Fan());
+            store.addFan(new Fan());
+            store.addFan(new Fan());
+            store.addFan(new Fan());
             stores.add(store);
         }
         storeRepository.saveAll(stores);

@@ -34,6 +34,11 @@ public class Store {
     @JoinColumn(name = "store_id")
     private Set<Employee> employees = new HashSet<>();
 
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "store_id")
+    private Set<Fan> fans = new HashSet<>();
+
     public Store(String name) {
         this(null, name);
     }
@@ -49,5 +54,8 @@ public class Store {
 
     public void hireEmployee(Employee employee) {
         employees.add(employee);
+    }
+    public void addFan(Fan fan) {
+        fans.add(fan);
     }
 }
