@@ -1,8 +1,10 @@
 package com.example.jpastudy.application;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
+import com.example.jpastudy.domain.EventSender;
+import com.example.jpastudy.domain.Product;
+import com.example.jpastudy.persistence.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,20 +13,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class DoSomethingService {
 
-    private final AsyncEventPublisher asyncEventPublisher;
-    private final SyncEventPublisher syncEventPublisher;
+    private final ApplicationEventPublisher applicationEventPublisher;
+    private final ProductRepository productRepository;
 
     public void doSomethingWithAsync() {
-        LocalDateTime start = LocalDateTime.now();
-        System.out.println(start);
-        asyncEventPublisher.doLongLogic(null);
-        System.out.println(Duration.between(start, LocalDateTime.now()));
+        productRepository.save(new Product("밖에서 저장", 100));
+        applicationEventPublisher.publishEvent(new EventSender());
     }
 
     public void doSomethingWithSync() {
-        LocalDateTime start = LocalDateTime.now();
-        System.out.println(start);
-        syncEventPublisher.doLongLogic(null);
-        System.out.println(Duration.between(start, LocalDateTime.now()));
+        productRepository.save(new Product("동기 상품", 100));
     }
 }

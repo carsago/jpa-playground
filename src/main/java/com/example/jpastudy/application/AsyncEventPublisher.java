@@ -1,6 +1,8 @@
 package com.example.jpastudy.application;
 
-import org.springframework.scheduling.annotation.Async;
+import com.example.jpastudy.domain.EventSender;
+import com.example.jpastudy.persistence.ProductRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,15 +10,18 @@ import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
+@RequiredArgsConstructor
 public class AsyncEventPublisher {
 
+    private final ProductRepository productRepository;
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    @Async
-    public void doLongLogic(Integer value) {
+    @Transactional(propagation = Propagation.REQUIRED)
+//    @Async
+    public void doLongLogic(EventSender sender) {
+//        productRepository.save(new Product("안에서 저장", 100));
         try {
-            Thread.sleep(3000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
