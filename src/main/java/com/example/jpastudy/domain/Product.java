@@ -38,4 +38,8 @@ public class Product {
     public void addStore(Store store) {
         this.store = store;
     }
+
+    public void addQuantity(Integer value) {
+        quantity += value;
+    }
 }
