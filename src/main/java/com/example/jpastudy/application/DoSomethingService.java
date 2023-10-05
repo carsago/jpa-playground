@@ -21,7 +21,18 @@ public class DoSomethingService {
         applicationEventPublisher.publishEvent(new EventSender());
     }
 
+    public void save() {
+        productRepository.save(new Product("직접호출저장", 100));
+        applicationEventPublisher.publishEvent(new EventSender());
+    }
+
     public void doSomethingWithSync() {
         productRepository.save(new Product("동기 상품", 100));
+    }
+
+    public void update() {
+        Product product = productRepository.findById(1L).get();
+        product.setName("직접호출 바꿈");
+        applicationEventPublisher.publishEvent(new UpdateEvent());
     }
 }

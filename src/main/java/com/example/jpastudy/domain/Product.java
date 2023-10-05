@@ -42,4 +42,20 @@ public class Product {
     public void addQuantity(Integer value) {
         quantity += value;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
 }
