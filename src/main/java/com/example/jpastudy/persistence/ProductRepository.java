@@ -14,4 +14,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("update Product p set p.quantity = :quantities where p.id in :productIds")
     void updateQuantities(@Param("productIds") List<Long> productIds,
                           @Param("quantities") List<Integer> quantities);
+
+    @Query("select p from Product p where p.name like %:param%")
+    List<Product> findByParam(@Param("param") String param);
 }

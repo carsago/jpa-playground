@@ -1,5 +1,7 @@
 package com.example.jpastudy.persistence;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.example.jpastudy.domain.Product;
 import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
@@ -38,6 +40,22 @@ class ProductRepositoryTest {
         }
 
         em.flush();
+    }
+
+    @Test
+    void 찾기() {
+        // given
+        productRepository.save(new Product("3상품4", 100));
+        productRepository.save(new Product("5상품6", 100));
+        productRepository.save(new Product("절대안찾아지는친구", 100));
+        em.flush();
+        em.clear();
+
+        // when
+        List<Product> actual = productRepository.findByParam("상품");
+
+        // then
+        assertThat(actual).hasSize(2);
     }
 
 }

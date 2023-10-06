@@ -1,24 +1,16 @@
 spring:
   datasource:
     hikari:
-      jdbc-url: jdbc:mysql://localhost:13306/store?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&rewriteBatchedStatements=true&logger=com.mysql.jdbc.log.Slf4JLogger&profileSQL=true
+      jdbc-url: jdbc:mysql://localhost:13306/store?rewriteBatchedStatements=true
       username: user
       password: password
       driver-class-name: com.mysql.cj.jdbc.Driver
-datasource:
-  url: jdbc:h2:mem:test;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
   jpa:
+    hibernate:
+      ddl-auto: update  # (1) ??? ?? ??
     properties:
       hibernate:
-        generate_statistics: true
-        format_sql: true
-        dialect: org.hibernate.dialect.MySQLDialect
-        order_updates: true
         jdbc:
-          batch_versioned_data: true
-          batch_size: 25
-    show-sql: true
-    hibernate:
-      ddl-auto: create
-    open-in-view: false
+    #          batch_size: 9000
+    database-platform: org.hibernate.dialect.MySQL8Dialect
 
