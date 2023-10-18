@@ -2,6 +2,7 @@ package com.example.jpastudy.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.example.jpastudy.application.ticketing.MemberTicketServiceFacade;
 import com.example.jpastudy.domain.MemberTicket;
 import com.example.jpastudy.domain.Ticket;
 import com.example.jpastudy.persistence.MemberTicketRepository;
@@ -20,10 +21,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 @DisplayNameGeneration(ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 @SpringBootTest
-class TicketServiceTest {
+class TicketingTest {
 
     @Autowired
-    private TicketServiceFacade ticketService;
+    private MemberTicketServiceFacade ticketService;
 
     @Autowired
     private TicketRepository ticketRepository;
@@ -34,9 +35,9 @@ class TicketServiceTest {
     @RepeatedTest(500)
     void 테스트() {
         // given
-        Ticket ticket = ticketRepository.save(new Ticket(1, false));
-        int tryCount = 8;
-        ExecutorService executor = Executors.newFixedThreadPool(8);
+        Ticket ticket = ticketRepository.save(new Ticket(20, false));
+        int tryCount = 40;
+        ExecutorService executor = Executors.newFixedThreadPool(5);
 
         // when
         List<CompletableFuture<Void>> futures = IntStream.range(0, tryCount)
@@ -51,6 +52,6 @@ class TicketServiceTest {
         List<MemberTicket> memberTickets = memberTicketRepository.findAllByTicket(ticket).stream()
             .filter(MemberTicket::isCanUse)
             .toList();
-        assertThat(memberTickets).hasSize(1);
+        assertThat(memberTickets).hasSize(20);
     }
 }

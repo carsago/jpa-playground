@@ -1,7 +1,7 @@
 package com.example.jpastudy.presentation;
 
 
-import com.example.jpastudy.application.TicketServiceFacade;
+import com.example.jpastudy.application.ticketing.MemberTicketServiceFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TicketController {
 
-    private final TicketServiceFacade ticketService;
+    private final MemberTicketServiceFacade ticketService;
 
     @GetMapping("/ticket")
     public ResponseEntity<Void> ticketing() {
