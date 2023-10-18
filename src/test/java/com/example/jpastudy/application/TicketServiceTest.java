@@ -31,12 +31,12 @@ class TicketServiceTest {
     @Autowired
     private MemberTicketRepository memberTicketRepository;
 
-    @RepeatedTest(100)
+    @RepeatedTest(500)
     void 테스트() {
         // given
-        Ticket ticket = ticketRepository.save(new Ticket(100, false));
-        int tryCount = 200;
-        ExecutorService executor = Executors.newFixedThreadPool(16);
+        Ticket ticket = ticketRepository.save(new Ticket(1, false));
+        int tryCount = 8;
+        ExecutorService executor = Executors.newFixedThreadPool(8);
 
         // when
         List<CompletableFuture<Void>> futures = IntStream.range(0, tryCount)
@@ -51,7 +51,6 @@ class TicketServiceTest {
         List<MemberTicket> memberTickets = memberTicketRepository.findAllByTicket(ticket).stream()
             .filter(MemberTicket::isCanUse)
             .toList();
-        System.out.println("memberTickets.size() = " + memberTickets.size());
-        assertThat(memberTickets).hasSize(100);
+        assertThat(memberTickets).hasSize(1);
     }
 }

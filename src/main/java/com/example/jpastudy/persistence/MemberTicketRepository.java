@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberTicketRepository extends JpaRepository<MemberTicket, Long> {
 
-    long countMemberTicketByIdBeforeAndTicket(Long id, Ticket ticket);
+    long countMemberTicketByIdBeforeAndTicketId(Long id, Long ticketId);
 
     long countMemberTicketByIdBefore(Long memberTicketId);
 

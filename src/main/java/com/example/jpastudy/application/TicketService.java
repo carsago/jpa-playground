@@ -17,23 +17,23 @@ public class TicketService {
     private final TicketRepository ticketRepository;
     private final MemberTicketRepository memberTicketRepository;
 
-    @Transactional
-    public TicketEvent doit(Long ticketId) {
-        log.info("직전 메소드 호출");
-        Ticket ticket = ticketRepository.findById(ticketId).get();
+//    @Transactional
+    public TicketRegisterDto register(Long ticketId) {
+        Ticket ticket = ticketRepository.findById(ticketId)
+            .orElseThrow(IllegalArgumentException::new);
         if (ticket.isOutOfStock()) {
             throw new IllegalArgumentException();
         }
-        MemberTicket memberTicket = memberTicketRepository.save(new MemberTicket(ticket, false));
-        return new TicketEvent(memberTicket.getId(), ticket.getId(), ticket.getMaxAmount());
+
+        Long memberTicketId = memberTicketRepository.save(new MemberTicket(ticket, false)).getId();
+        return new TicketRegisterDto(memberTicketId, ticket.getId(), ticket.getMaxAmount());
     }
 
     @Transactional(readOnly = true)
-    public void check(Long memberTicketId) {
+    public void checkSuccess(Long memberTicketId) {
         MemberTicket memberTicket = memberTicketRepository.findById(memberTicketId).get();
         if (!memberTicket.isCanUse()) {
             throw new IllegalArgumentException();
         }
-
     }
 }

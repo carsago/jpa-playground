@@ -12,8 +12,12 @@ public class TicketServiceFacade {
 
 
     public void doit(Long ticketId) {
-        TicketEvent ticketEvent = ticketService.doit(ticketId);
-        memberTicketMaker.doSomething(ticketEvent);
-        ticketService.check(ticketEvent.memberTicketId());
+        TicketRegisterDto ticketRegisterDto = ticketService.register(ticketId);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        memberTicketMaker.update(ticketRegisterDto);
     }
 }

@@ -19,18 +19,24 @@ public class MemberTicketMaker {
     private final MemberTicketRepository memberTicketRepository;
 
     @Transactional
-    public void doSomething(TicketEvent ticketEvent) {
-        log.info("이벤트 호출");
-        Long memberTicketId = ticketEvent.memberTicketId();
-        int maxTicketAmount = ticketEvent.maxTicketAmount();
-        Ticket ticket = ticketRepository.findById(ticketEvent.ticketId())
-            .orElseThrow(IllegalArgumentException::new);
-        long count = memberTicketRepository.countMemberTicketByIdBeforeAndTicket(memberTicketId, ticket);
-        if (count >= maxTicketAmount) {
+    public void update(TicketRegisterDto ticketRegisterDto) {
+        Long memberTicketId = ticketRegisterDto.memberTicketId();
+        int maxTicketAmount = ticketRegisterDto.maxTicketAmount();
+        Long ticketId = ticketRegisterDto.ticketId();
+        long count = memberTicketRepository.countMemberTicketByIdBeforeAndTicketId(memberTicketId, ticketId);
+        if (count > maxTicketAmount) {
+            return;
+        }
+
+        if (count == maxTicketAmount) {
+            Ticket ticket = ticketRepository.findById(ticketId)
+                .orElseThrow(IllegalArgumentException::new);
             ticket.setOutOfStock(true);
             return;
         }
-        MemberTicket memberTicket = memberTicketRepository.findById(memberTicketId).get();
+
+        MemberTicket memberTicket = memberTicketRepository.findById(memberTicketId)
+            .orElseThrow(IllegalArgumentException::new);
         memberTicket.setCanUse(true);
     }
 }
