@@ -6,11 +6,13 @@ spring:
       password: password
       driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
-    hibernate:
-      ddl-auto: update  # (1) ??? ?? ??
     properties:
       hibernate:
-        jdbc:
+        format_sql: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
     #          batch_size: 9000
     database-platform: org.hibernate.dialect.MySQL8Dialect
 
