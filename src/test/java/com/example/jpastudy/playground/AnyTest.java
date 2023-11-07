@@ -25,6 +25,6 @@ public class AnyTest {
     @Test
     void 테스트를_한다_깨졌유유() {
         // when && then
-        assertThat(1 + 4).isEqualTo(2);
+        assertThat(1 + 5).isEqualTo(2);
     }
 }
