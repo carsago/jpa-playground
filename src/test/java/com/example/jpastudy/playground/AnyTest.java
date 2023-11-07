@@ -21,4 +21,10 @@ public class AnyTest {
         // when && then
         assertThat(1 + 3).isEqualTo(2);
     }
+
+    @Test
+    void 테스트를_한다_깨졌다유유유() {
+        // when && then
+        assertThat(1 + 3).isEqualTo(2);
+    }
 }
