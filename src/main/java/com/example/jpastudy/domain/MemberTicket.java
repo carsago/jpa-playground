@@ -4,7 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -19,8 +18,7 @@ public class MemberTicket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Ticket ticket;
+    private Long ticket;
 
     private Long memberId;
 
@@ -30,11 +28,11 @@ public class MemberTicket {
 
     public MemberTicket(Long id, Ticket ticket, Long memberId) {
         this.id = id;
-        this.ticket = ticket;
+        this.ticket = ticket.getId();
         this.memberId = memberId;
     }
 
-    public boolean canEntry(LocalDateTime now) {
-        return now.isAfter(ticket.getEntryTime());
+    public boolean canEntry(LocalDateTime now, LocalDateTime entryTime) {
+        return now.isAfter(entryTime);
     }
 }
