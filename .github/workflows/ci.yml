@@ -4,8 +4,6 @@ on:
   pull_request:
     branches:
       - source
-    paths: '/**'
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,7 +16,8 @@ jobs:
           java-version: 17
           distribution: 'zulu'
           
-      - run: chmod +x gradlew
+      - name: grant permission    
+        run: chmod +x gradlew
 
       - name: Gradle build
         run: ./gradlew build
